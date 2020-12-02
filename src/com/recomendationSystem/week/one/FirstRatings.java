@@ -21,6 +21,8 @@ public class FirstRatings
     List<Rater>          raters;
 
     Map<String, Integer> moviesPerDirector;
+    Map<String, Integer> ratingsPerRater;
+    Map<String, Integer> ratingsPerMovie;
 
     public FirstRatings()
     {
@@ -262,9 +264,21 @@ public class FirstRatings
      */
     public void TestLoadRaters(String fileName)
     {
-        raters = loadRaters(fileName);
+        List<Rater> raters = loadRaters(fileName);
         System.out.println("There are " + raters.size() + " raters in file " + fileName);
-        printRaters();
+//        printRaters();
+        String raterId = "193";
+        System.out.println("Rater " + raterId + " has " + numOfRatings(raterId) + " ratings");
+        ratingsPerRater = countRatingsPerRaters();
+//        System.out.println(ratingsPerRater.toString());
+        System.out.println("Maximum ratings " + maximumRatingsMade());
+        System.out.println("Rater with maximum ratings " + ratersWithMaximumNumberOfRatings().toString());
+
+        ratingsPerMovie = countRatingsPerMovie();
+//        System.out.println(ratingsPerMovie.toString());
+        String movie = "1798709";
+        System.out.println("Movie " + movie + " has " + numberOfRatingsForMovie(movie) + " ratings");
+        System.out.println("Number of distinct movies : " + numberOfDistinctMovies());
     }
 
     private void printRaters()
@@ -272,5 +286,129 @@ public class FirstRatings
         for(Rater rater : raters) {
             System.out.println(rater.toString());
         }
+    }
+
+    /**
+     * Determine the number of Ratings a Rater has made.
+     *
+     * @param raterId
+     * @return
+     */
+    public int numOfRatings(String raterId)
+    {
+        for(Rater rater : raters) {
+            if(rater.getMyID().equals(raterId)) {
+                return rater.numRatings();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Find the maximum number of ratings all raters.
+     *
+     * @return
+     */
+    public int maximumRatingsMade()
+    {
+        int max = -1;
+        for(Map.Entry<String, Integer> entry : ratingsPerRater.entrySet())
+        {
+            if(entry.getValue() > max) {
+                max = entry.getValue();
+            }
+        }
+        return max;
+    }
+
+    /**
+     * Determine number of ratings each Rater made.
+     *
+     * @return a hashMap where the key is the Rater
+     *         id and the value the number of his/her
+     *         ratings.
+     */
+    public Map<String, Integer> countRatingsPerRaters()
+    {
+        Map<String, Integer> newRatingsPerRater = new HashMap<>();
+        for(Rater rater : raters)
+        {
+            newRatingsPerRater.put(rater.getMyID(), rater.numRatings());
+        }
+        return newRatingsPerRater;
+    }
+
+    /**
+     * Find the raters that had the maximum number
+     * of ratings.
+     *
+     * @return
+     */
+    public List<String> ratersWithMaximumNumberOfRatings()
+    {
+        int max = maximumRatingsMade();
+        List<String> maxRaters = new ArrayList<>();
+        for(Map.Entry<String,Integer> entry : ratingsPerRater.entrySet())
+        {
+            if(entry.getValue() == max) {
+                maxRaters.add(entry.getKey());
+            }
+        }
+        return maxRaters;
+    }
+
+    /**
+     * Find the number of ratings each movie had.
+     *
+     * @return a hashmap where the key is the movie
+     *         id and the value is the number of
+     *         ratings it has.
+     */
+    public Map<String, Integer> countRatingsPerMovie()
+    {
+        Map<String, Integer> mewRatingsPerMovie = new HashMap<>();
+
+        for(Rater rater : raters)
+        {
+            List<String> moviesRated = rater.getItemsRated();
+            for(String movie : moviesRated)
+            {
+                if(!mewRatingsPerMovie.containsKey(movie)) {
+                    mewRatingsPerMovie.put(movie, 1);
+                }
+                else {
+                    mewRatingsPerMovie.put(movie, mewRatingsPerMovie.get(movie) + 1);
+                }
+            }
+        }
+
+        return mewRatingsPerMovie;
+    }
+
+    /**
+     * Get the number of ratings a specified movie has.
+     *
+     * @param movieId
+     * @return
+     */
+    public int numberOfRatingsForMovie(String movieId)
+    {
+        return ratingsPerMovie.get(movieId);
+    }
+
+    /**
+     * Get the number of distinct movies appear
+     * in the raters list.
+     *
+     * @return
+     */
+    public int numberOfDistinctMovies()
+    {
+        Set<String> movieSet = new HashSet<>();
+        for(String key : ratingsPerMovie.keySet())
+        {
+            movieSet.add(key);
+        }
+        return movieSet.size();
     }
 }
