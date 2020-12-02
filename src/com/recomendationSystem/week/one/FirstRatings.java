@@ -1,6 +1,7 @@
 package com.recomendationSystem.week.one;
 
 import com.recomendationSystem.week.one.models.Movie;
+import com.recomendationSystem.week.one.models.Rater;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -8,10 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author George Lykoudis
@@ -20,6 +18,8 @@ import java.util.Map;
 public class FirstRatings
 {
     List<Movie>          movies;
+    List<Rater>          raters;
+
     Map<String, Integer> moviesPerDirector;
 
     public FirstRatings()
@@ -31,6 +31,9 @@ public class FirstRatings
     {
         if(movies == null) {
             movies = new ArrayList<Movie>();
+        }
+        if(raters == null) {
+            raters = new ArrayList<Rater>();
         }
     }
 
@@ -79,8 +82,8 @@ public class FirstRatings
      */
     public void TestLoadMovies(String fileName)
     {
-        movies = loadMovies(fileName);
-        System.out.println("There are " + movies.size() + " in file " + fileName);
+        List<Movie> testMovies = loadMovies(fileName);
+        System.out.println("There are " + testMovies.size() + " in file " + fileName);
         printMovies();
         System.out.println("There are " + countByGenre("Comedy") + " movies that belong to genre Comedy.");
         System.out.println("There are " + countMoviesLongerThanMinutes(150) + " movies longer than 150 minutes.");
@@ -207,5 +210,67 @@ public class FirstRatings
             }
         }
         return directors;
+    }
+
+    /**
+     * Reads a fileName and loads the data from raters
+     * in a list with Rater objects.
+     * @param fileName
+     * @return
+     */
+    public List<Rater> loadRaters(String fileName)
+    {
+        try(Reader in = new FileReader(fileName))
+        {
+            initialize();
+
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+            for(CSVRecord record : records)
+            {
+                String rater_id = record.get("rater_id");
+                String movie_id = record.get("movie_id");
+                double rating   = Double.parseDouble(record.get("rating"));
+                String date     = record.get("time");
+
+                Rater rater = new Rater(rater_id);
+                int index = raters.indexOf(rater);
+                if(index == -1) {
+                    rater.addRating(movie_id, rating);
+                    raters.add(rater);
+                }
+                else {
+                    raters.get(index).addRating(movie_id, rating);
+                }
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return this.raters;
+    }
+
+    /**
+     * Test for loadRaters function.
+     *
+     * @param fileName
+     */
+    public void TestLoadRaters(String fileName)
+    {
+        raters = loadRaters(fileName);
+        System.out.println("There are " + raters.size() + " raters in file " + fileName);
+        printRaters();
+    }
+
+    private void printRaters()
+    {
+        for(Rater rater : raters) {
+            System.out.println(rater.toString());
+        }
     }
 }

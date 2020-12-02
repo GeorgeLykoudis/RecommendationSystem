@@ -11,6 +11,8 @@ public class Main
     public static void main(String[] args)
     {
         FirstRatings firstRatings = new FirstRatings();
-        firstRatings.TestLoadMovies(moviesShortFile);
+//        firstRatings.TestLoadMovies(moviesShortFile);
+        firstRatings.TestLoadRaters(ratersShortFile);
     }
+
 }

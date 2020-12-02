@@ -27,7 +27,6 @@ public class Rater
      */
     public void addRating(String item, double rating)
     {
-        myID = item;
         myRatings.add(new Rating(item, rating));
     }
 
@@ -99,5 +98,35 @@ public class Rater
             ratedItems.add(rating.getItem());
         }
         return ratedItems;
+    }
+
+    @Override
+    public String toString() {
+        return "Rater{" +
+                "myID='" + myID + '\'' +
+                ", myRatings=" + myRatings.toString() +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return myID.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null) {
+            return false;
+        }
+        if(obj instanceof Rater)
+        {
+            Rater rater = (Rater) obj;
+            return rater.getMyID().equals(this.myID);
+        }
+
+        return false;
     }
 }
