@@ -1,6 +1,8 @@
 package com.recomendationSystem.week.one;
 
 import com.recomendationSystem.week.one.models.Movie;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,31 +19,45 @@ public class FirstRatings
 {
     List<Movie> movies;
 
+    public FirstRatings()
+    {
+        movies = new ArrayList<Movie>();
+    }
+
+    private void initialize()
+    {
+        if(movies == null) {
+            movies = new ArrayList<Movie>();
+        }
+    }
+
+    /**
+     * Reads a fileName and loads the data from movies
+     * in a list with Movie objects.
+     *
+     * @param fileName
+     * @return
+     */
     public List<Movie> loadMovies(String fileName)
     {
         try(Reader in = new FileReader(fileName))
         {
-            movies = new ArrayList<>();
+            initialize();
 
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
             for(CSVRecord record : records)
             {
-                if(record.get(0).equals("id")) {
-                    continue;
-                }
-                String id = record.get(0);
-                String title = record.get(1);
-                String year = record.get(2);
-                String country = record.get(3);
-                String genres = record.get(4);
-                String director = record.get(5);
-                String minutes = record.get(6);
-                String sticker = record.get(7);
+                String id       = record.get("id");
+                String title    = record.get("title");
+                String year     = record.get("year");
+                String country  = record.get("country");
+                String genres   = record.get("genre");
+                String director = record.get("director");
+                String minutes  = record.get("minutes");
+                String poster   = record.get("poster");
 
-                movies.add(new Movie(id, title, year, genres, director, country, minutes, sticker));
+                movies.add(new Movie(id, title, year, genres, director, country, minutes, poster));
             }
-
-            return movies;
         }
         catch(FileNotFoundException ex) {
             ex.printStackTrace();
@@ -50,6 +66,24 @@ public class FirstRatings
             ex.printStackTrace();
         }
 
-        return List.of();
+        return this.movies;
+    }
+
+    /**
+     * Test for loadMovies function.
+     *
+     * @param fileName
+     */
+    public void TestLoadMovies(String fileName)
+    {
+        movies = loadMovies(fileName);
+        System.out.println("There are " + movies.size() + " in file " + fileName);
+        printMovies();
+    }
+
+    private void printMovies() {
+        for(Movie movie : movies) {
+            System.out.println(movie.toString());
+        }
     }
 }
