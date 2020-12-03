@@ -1,6 +1,8 @@
 package com.recomendationSystem;
 
 import com.recomendationSystem.week.one.FirstRatings;
+import com.recomendationSystem.week.two.MovieRunnerAverage;
+import com.recomendationSystem.week.two.SecondRatings;
 
 public class Main
 {
@@ -12,9 +14,13 @@ public class Main
 
     public static void main(String[] args)
     {
-        FirstRatings firstRatings = new FirstRatings();
+//        FirstRatings firstRatings = new FirstRatings();
 //        firstRatings.TestLoadMovies(moviesShortFile);
-        firstRatings.TestLoadRaters(ratersShortFile);
+//        firstRatings.TestLoadRaters(ratersShortFile);
+
+        MovieRunnerAverage movieRunnerAverage = new MovieRunnerAverage(moviesShortFile, ratersShortFile);
+        movieRunnerAverage.printAverageRatings(2);
+        movieRunnerAverage.getAverageRatingOneMovie("The Godfather", 2);
     }
 
 }
