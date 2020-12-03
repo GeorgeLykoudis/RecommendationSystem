@@ -1,4 +1,4 @@
-package com.recomendationSystem.week.one.models;
+package com.recomendationSystem.models;
 
 /**
  * @author George Lykoudis

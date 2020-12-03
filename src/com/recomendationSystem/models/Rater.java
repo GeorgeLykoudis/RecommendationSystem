@@ -1,4 +1,4 @@
-package com.recomendationSystem.week.one.models;
+package com.recomendationSystem.models;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.recomendationSystem.week.one;
 
-import com.recomendationSystem.week.one.models.Movie;
-import com.recomendationSystem.week.one.models.Rater;
+import com.recomendationSystem.models.*;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -17,8 +17,8 @@ import java.util.*;
  */
 public class FirstRatings
 {
-    List<Movie>          movies;
-    List<Rater>          raters;
+    List<Movie> movies;
+    List<Rater> raters;
 
     Map<String, Integer> moviesPerDirector;
     Map<String, Integer> ratingsPerRater;
