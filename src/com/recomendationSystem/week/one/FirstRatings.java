@@ -18,7 +18,7 @@ import java.util.*;
 public class FirstRatings
 {
     List<Movie> movies;
-    List<Rater> raters;
+    List<PlainRater> raters;
 
     Map<String, Integer> moviesPerDirector;
     Map<String, Integer> ratingsPerRater;
@@ -35,7 +35,7 @@ public class FirstRatings
             movies = new ArrayList<Movie>();
         }
         if(raters == null) {
-            raters = new ArrayList<Rater>();
+            raters = new ArrayList<PlainRater>();
         }
     }
 
@@ -220,7 +220,7 @@ public class FirstRatings
      * @param fileName
      * @return
      */
-    public List<Rater> loadRaters(String fileName)
+    public List<PlainRater> loadRaters(String fileName)
     {
         try(Reader in = new FileReader(fileName))
         {
@@ -234,7 +234,7 @@ public class FirstRatings
                 double rating   = Double.parseDouble(record.get("rating"));
                 String date     = record.get("time");
 
-                Rater rater = new Rater(rater_id);
+                PlainRater rater = new PlainRater(rater_id);
                 int index = raters.indexOf(rater);
                 if(index == -1) {
                     rater.addRating(movie_id, rating);
@@ -264,7 +264,7 @@ public class FirstRatings
      */
     public void TestLoadRaters(String fileName)
     {
-        List<Rater> raters = loadRaters(fileName);
+        List<PlainRater> raters = loadRaters(fileName);
         System.out.println("There are " + raters.size() + " raters in file " + fileName);
 //        printRaters();
         String raterId = "193";
@@ -283,7 +283,7 @@ public class FirstRatings
 
     private void printRaters()
     {
-        for(Rater rater : raters) {
+        for(PlainRater rater : raters) {
             System.out.println(rater.toString());
         }
     }
@@ -296,7 +296,7 @@ public class FirstRatings
      */
     public int numOfRatings(String raterId)
     {
-        for(Rater rater : raters) {
+        for(PlainRater rater : raters) {
             if(rater.getMyID().equals(raterId)) {
                 return rater.numRatings();
             }
@@ -331,7 +331,7 @@ public class FirstRatings
     public Map<String, Integer> countRatingsPerRaters()
     {
         Map<String, Integer> newRatingsPerRater = new HashMap<>();
-        for(Rater rater : raters)
+        for(PlainRater rater : raters)
         {
             newRatingsPerRater.put(rater.getMyID(), rater.numRatings());
         }
@@ -368,7 +368,7 @@ public class FirstRatings
     {
         Map<String, Integer> mewRatingsPerMovie = new HashMap<>();
 
-        for(Rater rater : raters)
+        for(PlainRater rater : raters)
         {
             List<String> moviesRated = rater.getItemsRated();
             for(String movie : moviesRated)
