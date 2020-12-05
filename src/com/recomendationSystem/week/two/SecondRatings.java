@@ -13,7 +13,7 @@ import java.util.List;
 public class SecondRatings
 {
     private List<Movie> myMovies;
-    private List<PlainRater> myRaters;
+    private List<Rater> myRaters;
 
     public static final String path = "D:\\workspace\\github\\preparation\\Java\\RecomendationSystem\\src\\com\\recomendationSystem\\data\\";
 
@@ -65,7 +65,7 @@ public class SecondRatings
 
         double total_rating = 0.0;
         int raters = 0;
-        for(PlainRater rater : myRaters)
+        for(Rater rater : myRaters)
         {
             double rating = rater.getRating(id);
             if(rating == -1) {
