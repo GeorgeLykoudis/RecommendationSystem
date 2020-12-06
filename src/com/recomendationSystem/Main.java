@@ -1,5 +1,6 @@
 package com.recomendationSystem;
 
+import com.recomendationSystem.week.five.RecommendationRunner;
 import com.recomendationSystem.week.four.MovieRunnerSimilarRatings;
 import com.recomendationSystem.week.one.FirstRatings;
 import com.recomendationSystem.week.three.MovieRunnerWithFilters;
@@ -40,33 +41,36 @@ public class Main
 //        movieRunnerWithFilters.printAverageRatingsByYearAfterAndGenre(minimalRaters, year, genre);
 //        movieRunnerWithFilters.printAverageRatingsByDirectorsAndMinutes(minimalRaters, minMinutes, maxMinutes, director);
 
-        MovieRunnerSimilarRatings movieRunnerSimilarRatings = new MovieRunnerSimilarRatings(moviesFullFile, ratersFullFile);
-        int minimalRaters = 10;
-        movieRunnerSimilarRatings.printAverageRatings(minimalRaters);
+//        MovieRunnerSimilarRatings movieRunnerSimilarRatings = new MovieRunnerSimilarRatings(moviesFullFile, ratersFullFile);
+//        int minimalRaters = 10;
+//        movieRunnerSimilarRatings.printAverageRatings(minimalRaters);
+//
+//        String raterId;
+//        int topSimilarRaters;
+//        String genre;
+//        String director;
+//        int minMinutes;
+//        int maxMinutes;
+//        int year;
+//
+//        raterId = "314";
+//        minimalRaters = 5;
+//        topSimilarRaters = 10;
+//        genre = "Drama";
+//        director = "Clint Eastwood,J.J. Abrams,Alfred Hitchcock,Sydney Pollack,David Cronenberg,Oliver Stone,Mike Leigh";
+//        minMinutes = 70;
+//        maxMinutes = 200;
+//        year = 1975;
+//
+//        movieRunnerSimilarRatings.printSimilarRatings(raterId, topSimilarRaters, minimalRaters);
+//        movieRunnerSimilarRatings.printSimilarRatingsByGenre(raterId, topSimilarRaters, minimalRaters, genre);
+//        movieRunnerSimilarRatings.printSimilarRatingsByDirector(raterId, topSimilarRaters, minimalRaters, director);
+//        movieRunnerSimilarRatings.printSimilarRatingsByGenreAndMinutes(raterId, topSimilarRaters, minimalRaters, genre, minMinutes, maxMinutes);
+//        movieRunnerSimilarRatings.printSimilarRatingsByYearAfterAndMinutes(raterId, topSimilarRaters, minimalRaters, year, minMinutes, maxMinutes);
+//        System.out.println("========================================" + " FOURTH RATING ENDS " + "========================================\n");
 
-        String raterId;
-        int topSimilarRaters;
-        String genre;
-        String director;
-        int minMinutes;
-        int maxMinutes;
-        int year;
-
-        raterId = "314";
-        minimalRaters = 5;
-        topSimilarRaters = 10;
-        genre = "Drama";
-        director = "Clint Eastwood,J.J. Abrams,Alfred Hitchcock,Sydney Pollack,David Cronenberg,Oliver Stone,Mike Leigh";
-        minMinutes = 70;
-        maxMinutes = 200;
-        year = 1975;
-
-        movieRunnerSimilarRatings.printSimilarRatings(raterId, topSimilarRaters, minimalRaters);
-        movieRunnerSimilarRatings.printSimilarRatingsByGenre(raterId, topSimilarRaters, minimalRaters, genre);
-        movieRunnerSimilarRatings.printSimilarRatingsByDirector(raterId, topSimilarRaters, minimalRaters, director);
-        movieRunnerSimilarRatings.printSimilarRatingsByGenreAndMinutes(raterId, topSimilarRaters, minimalRaters, genre, minMinutes, maxMinutes);
-        movieRunnerSimilarRatings.printSimilarRatingsByYearAfterAndMinutes(raterId, topSimilarRaters, minimalRaters, year, minMinutes, maxMinutes);
-        System.out.println("========================================" + " FOURTH RATING ENDS " + "========================================\n");
+        RecommendationRunner recommendationRunner = new RecommendationRunner();
+        recommendationRunner.printRecommendationsFor("314");
     }
 
 }
