@@ -15,5 +15,5 @@ public interface Rater
     public double getRating(String item);
     public int numRatings();
     public List<String> getItemsRated();
-    public ArrayList<String> getRatings();
+    public ArrayList<Rating> getRatings();
 }

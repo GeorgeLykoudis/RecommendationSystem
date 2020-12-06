@@ -87,15 +87,14 @@ public class PlainRater implements Rater
 
     /**
      *
-     * @return  an ArrayList of Strings representing
-     *          a list of all the items that have been
-     *          rated.
+     * @return  an ArrayList of Ratings representing
+     *          all the items that have been rated.
      */
-    public ArrayList<String> getRatings()
+    public ArrayList<Rating> getRatings()
     {
-        ArrayList<String> ratedItems = new ArrayList<>();
+        ArrayList<Rating> ratedItems = new ArrayList<>();
         for(Rating rating : myRatings) {
-            ratedItems.add(rating.getItem());
+            ratedItems.add(rating);
         }
         return ratedItems;
     }
